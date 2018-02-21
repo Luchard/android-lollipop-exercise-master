@@ -1,6 +1,9 @@
 package com.codepath.android.lollipopexercise.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +16,7 @@ import com.codepath.android.lollipopexercise.models.Contact;
 
 public class DetailsActivity extends AppCompatActivity {
     public static final String EXTRA_CONTACT = "EXTRA_CONTACT";
+    private FloatingActionButton fab;
     private Contact mContact;
     private ImageView ivProfile;
     private TextView tvName;
@@ -23,7 +27,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         ivProfile = (ImageView) findViewById(R.id.ivProfile);
         tvName = (TextView) findViewById(R.id.tvName);
         tvPhone = (TextView) findViewById(R.id.tvPhone);
@@ -36,6 +40,17 @@ public class DetailsActivity extends AppCompatActivity {
         Glide.with(DetailsActivity.this).load(mContact.getThumbnailDrawable()).centerCrop().into(ivProfile);
         tvName.setText(mContact.getName());
         tvPhone.setText(mContact.getNumber());
+        
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uri = "tel:" + mContact.getNumber();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(uri));
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

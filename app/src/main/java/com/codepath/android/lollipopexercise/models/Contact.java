@@ -50,6 +50,8 @@ public class Contact implements Serializable {
         return contacts;
     }
 
+
+
     // Returns a random contact
     public static Contact getRandomContact(Context context) {
 
